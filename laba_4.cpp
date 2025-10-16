@@ -8,10 +8,10 @@ int main() {
     setlocale(LC_ALL, "rus");
     int n;
     cin >> n;
-    vector<int> vec;
+    vector<double> vec;
 
     for (int i = 0; i < n; i++) {
-        int number;
+        double number;
         cin >> number;
         vec.push_back(number);
     }
@@ -52,9 +52,9 @@ int main() {
     //1
     int n2;
     cin >> n2;
-    vector<int> vec2;
+    vector<double> vec2;
     for (int i = 0; i < n2; i++) {
-        int number;
+        double number;
         cin >> number;
         vec2.push_back(number);
     }
@@ -75,7 +75,7 @@ int main() {
     }
     //2
     for (int i = 0; i < n2; i++) {
-        int sum = 0;
+        double sum = 0;
         if (vec2[i] < 0) {
             for (int j = 1; j < n2 - i; j++) {
                 sum += abs(vec2[i + j]);
