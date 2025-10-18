@@ -52,7 +52,7 @@ int main() {
     //1
     int n2;
     cin >> n2;
-    int* vec2 = new int [n2];
+    double* vec2 = new double [n2];
     for (int i = 0; i < n2; i++) {
         double number;
         cin >> number;
@@ -86,18 +86,23 @@ int main() {
         }
     }
     //3
-    for (int i = 0; i < n2; i++) {
-        int nol = 0;
-        if (abs(vec2[i]) <= 2) {
-            vec2[i] = nol;
+    double* vec3 = new double(n2);
+    for (int j = 0; j < n2; j++) {
+        vec3[j] = 0;
+    }
+    for (int i = 0, j =0; i < n2; i++) {
+
+        if (vec2[i] > 2 || vec2[i] < -2) {
+            vec3[j] = vec2[i];
+            j++;
+            
+
         }
-        else
-            vec2[i] = abs(vec2[i]);
     }
-    sort(vec2, vec2 + n2, greater<double>());
     for (int i = 0; i < n2; i++) {
-        cout << vec2[i] << " ";
+        cout << vec3[i] << " ";
     }
+   
 
 
     return 0;
