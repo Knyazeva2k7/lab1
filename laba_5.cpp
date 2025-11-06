@@ -128,33 +128,28 @@ int main() {
     }
     //6 zadanie
     string str, poisk;
-    int numOfstr;
-
+    int countStr;
     cout << "Введите количество строк с данными " << endl;
-    cin >> numOfstr;
-
-    vector<string> strInf(numOfstr);
-
+    cin >> countStr;
+    
+    vector <string> inf(countStr);
+    
     cout << "Ведите строки с данными " << endl;
-    for (auto str : strInf) {
-        cin.ignore();
+    for (int i = 0; i < countStr; i++) {
         cin >> str;
+        inf.push_back(str);
     }
-
     cout << "Введите поисковую строку " << endl;
     cin >> poisk;
-
-    for (const auto str : strInf) {
+    for (const auto str : inf) {
         if (str.find(poisk) != string::npos) {
             cout << str << endl;
-        }
-        else {
-            cout << "not found" << endl;
         }
     }
 
     return 0;
 }
+
 
 
 
