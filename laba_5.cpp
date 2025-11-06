@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <cmath>
 #include <string>
 #include <vector>
@@ -120,9 +120,10 @@ int main() {
     cout << "Введите количество людей" << endl;
 
     cin >> num;
+    srand(time(nullptr));
     for (int i = 0; i < num; i++) {
-        int randNum1 = first + rand() % last;
-        int randNum2 = first + rand() % last;
+        int randNum1 =  rand() % (last - 1) + first;
+        int randNum2 = rand() % (last - 1) + first;
         cout << names[randNum1] << " " << surnames[randNum2] << endl;
     }
     //6 zadanie
@@ -144,12 +145,18 @@ int main() {
     cin >> poisk;
 
     for (const auto str : strInf) {
-        if (str.find(poisk) != string::npos)
+        if (str.find(poisk) != string::npos) {
             cout << str << endl;
+        }
+        else {
+            cout << "not found" << endl;
+        }
     }
 
     return 0;
 }
+
+
 
 
 
