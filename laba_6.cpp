@@ -21,7 +21,8 @@ int main() {
     m = abs(m);
     fileout.open("file.txt");
     for (int i = 1; i <= n; i++) {
-        fileout << i << endl;
+        if (i % 2 == 0)
+            fileout << i << endl;
     }
     fileout.close();
 
@@ -89,4 +90,5 @@ int main() {
         cout << "нет положительных чисел." << endl;
     }
     return 0;
+
 }
