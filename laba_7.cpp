@@ -32,28 +32,29 @@ double* maxi2(double& n1, double& n2, double& n3) {
     else
         return &n3;
 }
-
-void maxMin(int*& arr, int*& max) {
-    for (int i = 0; i < *(&arr + 1) - arr; i++) {
-        if (arr[i] > *max)
-            max = &arr[i];
+int& mini2(int(&arr)[5]) {
+    int min = arr[0];
+    for (int i = 0; i < 5; i++) {
+        if (arr[i] < min) {
+            min = arr[i];
+        }
     }
+    return min;
+}
 
-    cout << &max << endl;
+int maxi2(int(&arr)[5]) {
+    int max = arr[0];
+    for (int i = 0; i < 5; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }return max;
 }
-void maxMin2(int*& arr, int*& min) {
-    int* min = &arr[0];
-    for (int i = 0; i < *(&arr + 1) - arr; i++) {
-        if (arr[i] < arr[i + 1])
-            min = &arr[i];
-    }
-    cout << &min << endl;
+
+void swap2(int (&arr)[5]) {
+    mini(arr) = maxi(arr);
 }
-void swap(int*& arr) {
-    int*& temp = maxMin(int*& arr, int*& max);
-    maxMin(int*& arr, int*& max) = maxMin2(int*& arr, int*& min);
-    maxMin2(int*& arr) = int*& temp;
-}
+
 
 int main() {
     setlocale(LC_ALL, "rus");
@@ -98,17 +99,16 @@ int main() {
 
     //5 zadanie
     cout << "введите длину массива " << endl;
-    int n;
-    cin >> n;
-    int* arr = new int[n];
-    cout << "array " << endl;
-    for (int i = 0; i < n; i++) {
-        int num = rand();
-        arr[i] = num;
-        cout << num << " ";
+    int arr[5] = {5, 4, 1, 7, 8};
+
+    cout << mini(arr) << endl;
+    cout << maxi(arr) << endl;
+    swap(arr);
+    for (int i = 0; i < 5; i++) {
+        cout << arr[i];
     }
     cout << endl;
-    maxMin(arr, arr[0]);
 
     return 0;
+
 }
