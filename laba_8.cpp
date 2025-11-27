@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <cmath>
 #include <string>
 #include <fstream>
@@ -19,16 +19,16 @@ void echo(int**& matrix, int n) {
     }
 }
 
-int**& matrix(int n, int a, int b) {
-    int*** matrix_ptr = new int**;//указатель на число инт для строк матрицы
-    *matrix_ptr = new int* [n]; //выделение памяти под эту строку
+
+int** matrix(int n, int a, int b) {
+    int** matrix_ptr = new int*[n];//указатель на число инт для строк матриц
     for (int i = 0; i < n; i++) {
-        (*matrix_ptr)[i] = new int[n];//выделение памяти под каждый элемент строки
+        matrix_ptr[i] = new int[n];//выделение памяти под каждый элемент строки
         for (int j = 0; j < n; j++) {
-            (*matrix_ptr)[i][j] = getInterval(a, b);
+            matrix_ptr[i][j] = getInterval(a, b);
         }
     }
-    return *matrix_ptr;//возвращает саму матрицу
+    return matrix_ptr;
 }
 
 void clear(int**& matrix, int n) {
@@ -39,122 +39,69 @@ void clear(int**& matrix, int n) {
     matrix = nullptr;
 }
 
-void swap(int a, int b) {
-    int c = a;
-    a = b;
-    b = c;
-}
 
-int green(int**& matrix, int n) {
-    int maxMatG, minMatG;
-    int min = matrix[0][0], max = matrix[0][0];
-    int minG = matrix[0][0], maxG = matrix[0][0];
-    for (int i = 0; i < n; i++) {
-        if (i < n / 2 + 1) {
-            for (int j = 0; j < n - i; j++) {
-
-                if ((j < n / 2 + 1) && (j >= i)) {
-                    if (matrix[i][j] > max && matrix[i][j] < 0)
-                        max = matrix[i][j];
-
-                    if (matrix[i][j] < min && matrix[i][j]> 0)
-                        min = matrix[i][j];
-
-                }
-
-                for (int i = 0; i < n / 2 + 1; i++) {
-                    for (int j = n / 2 + 1; j < n - i; j++) {
-                        if (matrix[i][j] > maxG)
-                            maxG = matrix[i][j];
-                        if (matrix[i][j] < minG)
-                            minG = matrix[i][j];
-                    }
-                }
-            }
+int* green(int**& matrix, int n, int a) {
+    int* maxPtr{};
+    
+    int max = a;
+    for (int j = 0; j < n; j++) {        
+        for (int i = 0; i < (j < n/2. ? j: n-j-1); i++) {            
+            if (matrix[i][j] > max && matrix[i][j] < 0) {
+                max = matrix[i][j];
+                maxPtr = matrix[i] + j;
+             }   
         }
     }
-    if (minG > min) {
-        int minMatG = min;
-        return minMatG;
-    }
-    else {
-        int minMatG = minG;
-        return minMatG;
-    }
-
-
-    if (maxG < max) {
-        int maxMatG = max;
-        return maxMatG;
-    }
-    else {
-        int maxMatG = maxG;
-        return maxMatG;
-    }
-    return maxMatG;
+    if (maxPtr == nullptr)
+        cout << "нет чисел, подходящих под условие" << endl;
+    return maxPtr;
 }
 
-void red(int**& matrix, int n) {
-    int maxMatR = matrix[0][0], minMatR = matrix[0][0];
+int* red(int**& matrix, int n,  int b) {
+    int min = b;
+    int* minPtr{};
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
             if (i + j >= n - 1) {
-                if (matrix[i][j] > maxMatR) {
-                    maxMatR = matrix[i][j];
-
-                }
-                if (matrix[i][j] < minMatR) {
-                    minMatR = matrix[i][j];
-
+                if (matrix[i][j] < min && matrix[i][j] > 0) {
+                    minPtr = matrix[i] + j;
+                    min = matrix[i][j];
                 }
             }
         }
     }
-    cout << minMatR << endl;
-    cout << maxMatR << endl;
+    if (minPtr == nullptr)
+        cout << "нет чисел, подходящих под условие"<< endl;
+    
+    return minPtr;
 }
+
 int main() {
     setlocale(LC_ALL, "rus");
     //1 zadanie
     srand(time(nullptr));
 
     int n, a, b;
-    cout << "Enter array size" << endl;
+    cout << "Введите размер матрицы" << endl;
     cin >> n;
-    cout << "Enter interval for values generation" << endl;
+    cout << "Введите интервал для чисел" << endl;
     cin >> a >> b;
 
-    int**& mat = matrix(n, a, b);
+    int** mat = matrix(n, a, b);
 
-    green(mat, n);
-    red(mat, n);
     echo(mat, n);
+    int* maxNegativePtr = red(mat, n, b);
+    int* minPositivePtr = green(mat, n, a);
+    cout << "Числа которые поменчялись местаами: " << *maxNegativePtr <<
+        " и " << *minPositivePtr << endl;
+    int temp = *maxNegativePtr;
+    *maxNegativePtr = *minPositivePtr;
+    *minPositivePtr = temp;
 
+    echo(mat, n);
     clear(mat, n);
 
-    //2 zadanie
-    ofstream file("file.txt");
-
-    file.open("file.txt");
-    for (int i = 1; i <= 50; i++) {
-        file << i << endl;
-    }
-    file.close();
-    ifstream file2("file.txt");
-    int** matrica = new int* [n];
-    for (int i = 0; i < n; i++) {
-        matrica[i] = new int[n];
-        for (int j = 0; j < n; j++) {
-            int num;
-            for (int a = 1; a <= n; a++) {
-                file2 >> num;
-                matrica[i][j] = num;
-
-            }
-
-        }
-    }
-
+    
 
     return 0;
 }
