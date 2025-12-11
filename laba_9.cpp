@@ -66,14 +66,14 @@ pair<SU*, bool> findAllGpaB(float target, const SU* arr,
     int count2 = 0;
     //больше введенного значения
     for (int i = 0; i < n; i++) {
-        if (arr[i].gpa > target)
+        if (arr[i].gpa == target)
             count2++;
     }
 
     SU* foundGpa = new SU[count2];
     int j = 0;
     for (int i = 0; i < n && j < count2; i++) {
-        if (arr[i].gpa > target)
+        if (arr[i].gpa == target)
             foundGpa[j++] = arr[i];
     }
     return { foundGpa, !foundGpa == NULL };
@@ -272,7 +272,7 @@ int main() {
             int yearAdmission;
             cout << "введите год поступления" << endl;
             cin >> yearAdmission;
-            int n = 12;
+            int n = 6;
             pair<SU*, bool > res = findAllYear(yearAdmission, vus, n);
             if (res.second) {
                 cout << "Студенты, поступившие в " << yearAdmission << " год" << endl;
@@ -289,7 +289,7 @@ int main() {
             float gpa;
             cout << "Введите средний балл " << endl;
             cin >> gpa;
-            int n = 12;
+            int n = 6;
 
             pair<SU*, bool> res = findAllGpaM(gpa, vus, n);
             if (res.second) {
@@ -304,7 +304,7 @@ int main() {
             float gpa;
             cout << "Введите средний балл " << endl;
             cin >> gpa;
-            int n = 12;
+            int n = 6;
 
             pair<SU*, bool> res = findAllGpaB(gpa, vus, n);
             if (res.second) {
@@ -327,7 +327,8 @@ int main() {
         }
         
 
-    } while (choice != 0);
+        } while (choice != 0);
     
     return 0;
 }
+
